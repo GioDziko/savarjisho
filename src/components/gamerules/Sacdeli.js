@@ -37,6 +37,8 @@ const Sacdeli = ({game,sigrdze,setgame,miyolebit,sigane}) => {
     const checkNumber=(index)=>{
         vertical(index);
         horizontal(index);
+        nMainDiagonal(index);
+        MainDiagonal(index);
     }
   
     const horizontal=(index)=>{
@@ -69,11 +71,43 @@ const Sacdeli = ({game,sigrdze,setgame,miyolebit,sigane}) => {
             alert('Winner')
         }
     }
+    
     const vertical=(index)=>{
         var counter=1;
         var symbol=boolean? "X":"0";
         for(let i=1,k=Number(sigrdze);i<=miyolebit;i++,k+=Number(sigrdze)){
             if(checkBottom(Number(index)+k-Number(sigrdze))===1){
+                break;
+            }else{
+                if(temp[Number(index)+k]===symbol){
+                    counter++;  
+                }else{
+                    break;
+                }
+            }
+        }
+        for(let i=1,k=Number(sigrdze);i<=miyolebit;i++,k+=Number(sigrdze)){
+            
+            if(checkTop(Number(index)-k+Number(sigrdze))===1){
+                break
+            }else{
+                if(temp[Number(index)-k]===symbol){
+                    counter++;  
+                }else{
+                    break;
+                }
+            }
+        }
+        if(counter >= miyolebit){
+            alert('Winner')
+        }
+    }
+
+    const nMainDiagonal=(index)=>{
+        var counter=1;
+        var symbol=boolean? "X":"0";
+        for(let i=1,k=Number(sigrdze)+1;i<=miyolebit;i++,k+=Number(sigrdze)+1){
+            if(checkBottom(Number(index)+k-Number(sigrdze)-1)===1 ||checkRight(Number(index)+k-Number(sigrdze)-1)===1){
                 console.log('bottom-bottom');
                 break;
             }else{
@@ -85,9 +119,9 @@ const Sacdeli = ({game,sigrdze,setgame,miyolebit,sigane}) => {
                 }
             }
         }
-        for(let i=1,k=Number(sigrdze);i<=miyolebit;i++,k+=Number(sigrdze)){
+        for(let i=1,k=Number(sigrdze)+1;i<=miyolebit;i++,k+=Number(sigrdze)+1){
             
-            if(checkTop(Number(index)-k+Number(sigrdze))===1){
+            if(checkTop(Number(index)-k+Number(sigrdze)+1)===1 || checkLeft(Number(index)-k+Number(sigrdze)+1)===1){
                 console.log('top-top');
                 break
             }else{
@@ -104,6 +138,43 @@ const Sacdeli = ({game,sigrdze,setgame,miyolebit,sigane}) => {
             alert('Winner')
         }
     }
+
+    const MainDiagonal=(index)=>{
+        var counter=1;
+        var symbol=boolean? "X":"0";
+        for(let i=1,k=Number(sigrdze)-1;i<=miyolebit;i++,k+=Number(sigrdze)-1){
+            if(checkBottom(Number(index)+k-Number(sigrdze)+1)===1 ||checkLeft(Number(index)+k-Number(sigrdze)+1)===1){
+                console.log('bottom-bottom');
+                break;
+            }else{
+                if(temp[Number(index)+k]===symbol){
+                    counter++;  
+                }else{
+                    console.log('bottom-chukura');
+                    break;
+                }
+            }
+        }
+        for(let i=1,k=Number(sigrdze)-1;i<=miyolebit;i++,k+=Number(sigrdze)-1){
+            
+            if(checkTop(Number(index)-k+Number(sigrdze)-1)===1 || checkRight(Number(index)-k+Number(sigrdze)-1)===1){
+                console.log('top-top');
+                break
+            }else{
+                if(temp[Number(index)-k]===symbol){
+                    counter++;  
+                }else{
+                    console.log('top-chukura');
+                    break;
+                }
+            }
+        }
+        console.log(counter);
+        if(counter >= miyolebit){
+            alert('Winner')
+        }
+    }
+
     const clickhandler=(e)=>{
         if(boolean){
             temp[e.target.value]="X";
