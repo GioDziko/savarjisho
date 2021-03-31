@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useEffect} from 'react'
+import './style.css'
+import Gamerules from './components/gamerules/Gamerules';
+import Sacdeli from './components/gamerules/Sacdeli'
+const App = () => {
+    const [sigrdze, setsigrdze] = useState(0);
+    const [sigane, setsigane] = useState(0);
+    const [miyolebit, setmiyolebit] = useState(0);
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [game, setgame] = useState([]);
+    var temp = new Array(sigrdze*sigane);
+    useEffect(() => {
+        temp.fill('');
+        setgame([...temp]);
+    }, [sigrdze,sigane])
+    
+    return (
+        <div>
+            <Gamerules setsigane={setsigane} setsigrdze={setsigrdze} setmiyolebit={setmiyolebit} />
+            <Sacdeli game={game} sigrdze={sigrdze} sigane={sigane} setgame={setgame} miyolebit={miyolebit}/>
+        </div>
+    )
 }
 
-export default App;
+export default App
